@@ -323,7 +323,7 @@ footer{padding:26px 56px;display:flex;justify-content:space-between;align-items:
     <div class="vstat"><span class="vstat-num">100+</span><span class="vstat-label">Enterprise<br>Clients</span></div>
     <div class="vstat"><span class="vstat-num">5yr</span><span class="vstat-label">Hands-on<br>Experience</span></div>
     <div class="vstat"><span class="vstat-num">4</span><span class="vstat-label">Markets<br>MA·TN·KSA·UAE</span></div>
-    <div class="vstat"><span class="vstat-num">200+</span><span class="vstat-label">Dashboards<br>Delivered</span></div>
+    <div class="vstat"><span class="vstat-num">40+</span><span class="vstat-label">Dashboards<br>Delivered</span></div>
   </div>
 </div>
 
@@ -384,8 +384,8 @@ footer{padding:26px 56px;display:flex;justify-content:space-between;align-items:
 
     <!-- ITEM 1 — LARGE: Revenue, Cost & Margin Control Tower -->
     <div class="portfolio-item large">
-      <div class="port-img tall" onclick="openLB('FinancialOpsReporting.png','Revenue, Cost & Margin Control Tower · Freterium')" style="cursor:zoom-in">
-        <img src="img/FinancialOpsReporting.png" alt="Revenue, Cost & Margin Control Tower" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease">
+      <div class="port-img tall" onclick="openLB('Screenshot 2026-06-26 at 16.06.52.png','Revenue, Cost & Margin Control Tower · Freterium')" style="cursor:zoom-in">
+        <img src="img/Screenshot 2026-06-26 at 16.06.52.png" alt="Revenue, Cost & Margin Control Tower" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease">
         <div class="port-overlay"><div class="port-overlay-icon">⤢</div><div class="port-overlay-label">Expand View</div></div>
       </div>
       <div class="port-info">
@@ -470,8 +470,8 @@ footer{padding:26px 56px;display:flex;justify-content:space-between;align-items:
 
     <!-- ITEM 8: Project Progress Reporting -->
     <div class="portfolio-item">
-      <div class="port-img" onclick="openLB('ProjectProgressReporting.png','Project Progress Reporting · Freterium')" style="cursor:zoom-in">
-        <img src="img/ProjectProgressReporting.png" alt="Project Progress Reporting" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease">
+      <div class="port-img" onclick="openLB('Screenshot 2026-06-26 at 16.08.34.png','Project Progress Reporting · Freterium')" style="cursor:zoom-in">
+        <img src="img/Screenshot 2026-06-26 at 16.08.34.png" alt="Project Progress Reporting" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease">
         <div class="port-overlay"><div class="port-overlay-icon">⤢</div><div class="port-overlay-label">Expand View</div></div>
       </div>
       <div class="port-info">
@@ -498,8 +498,8 @@ footer{padding:26px 56px;display:flex;justify-content:space-between;align-items:
 
     <!-- ITEM 10: AI Voyage Insights -->
     <div class="portfolio-item">
-      <div class="port-img" onclick="openLB('AIVoyageInsights.png','AI Voyage Lifecycle Insights · Freterium')" style="cursor:zoom-in">
-        <img src="img/AIVoyageInsights.png" alt="AI Voyage Lifecycle Insights" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease">
+      <div class="port-img" onclick="openLB('Screenshot 2026-06-26 at 16.12.11.png','AI Voyage Lifecycle Insights · Freterium')" style="cursor:zoom-in">
+        <img src="img/Screenshot 2026-06-26 at 16.12.11.png" alt="AI Voyage Lifecycle Insights" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease">
         <div class="port-overlay"><div class="port-overlay-icon">⤢</div><div class="port-overlay-label">Expand View</div></div>
       </div>
       <div class="port-info">
@@ -730,6 +730,21 @@ document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.le
 function animRing(){rx+=(mx-rx)*.15;ry+=(my-ry)*.15;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)}
 animRing();
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
+
+function openLB(src, label){
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lb-img');
+  const lbl = document.getElementById('lb-label');
+  img.src = 'img/' + src;
+  img.alt = label;
+  lbl.textContent = label;
+  lb.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeLB(){
+  document.getElementById('lightbox').style.display = 'none';
+  document.body.style.overflow = '';
+}
 </script>
 </body>
 </html>
