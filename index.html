@@ -1,790 +1,682 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>MyDataLytics</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
-  <meta content="" name="description">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Houssam Himr — Analytics Engineer & BI Lead</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Syne:wght@400;500;600;700;800&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#3B82F6;--blue2:#60A5FA;--blue3:#1D4ED8;--blue4:rgba(59,130,246,0.08);--blue5:rgba(59,130,246,0.15);
+  --bg:#05080F;--bg2:#080D18;--bg3:#0D1424;--bg4:#111A2E;--bg5:#162038;
+  --text:#E8EDF8;--text2:#8A95B0;--text3:#3D4A66;--text4:#1a2238;
+  --border:rgba(59,130,246,0.12);--border2:rgba(59,130,246,0.28);--border3:rgba(59,130,246,0.5);
+  --green:#10B981;--amber:#F59E0B;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none}
 
-  <!-- Favicons -->
-  <link href="img/favicon.png" rel="icon">
-  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+/* CURSOR */
+#cursor-dot{position:fixed;width:6px;height:6px;background:var(--blue2);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease;opacity:.5}
 
-  <!-- Bootstrap CSS File -->
-  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+/* NOISE */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:.5}
 
-  <!-- Libraries CSS Files -->
-  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="lib/animate/animate.min.css" rel="stylesheet">
-  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
-  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 56px;display:flex;justify-content:space-between;align-items:center;transition:all .4s}
+nav.scrolled{background:rgba(5,8,15,0.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:14px}
+.logo-mark{width:34px;height:34px;border:1px solid var(--border3);display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;color:var(--blue2);letter-spacing:.05em}
+.logo-text{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;letter-spacing:.5px}
+.nav-links{display:flex;gap:36px}
+.nav-links a{font-family:'Geist Mono',monospace;font-size:10px;color:var(--text3);text-decoration:none;letter-spacing:.15em;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--blue2)}
+.nav-r{display:flex;align-items:center;gap:14px}
+.avail{display:flex;align-items:center;gap:7px;font-family:'Geist Mono',monospace;font-size:10px;color:var(--green);letter-spacing:.1em;border:1px solid rgba(16,185,129,.3);padding:7px 14px}
+.avail-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.btn-hire{font-family:'Geist Mono',monospace;font-size:10px;background:var(--blue);color:#fff;padding:9px 22px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .3s}
+.btn-hire:hover{background:var(--blue2)}
 
-  <!-- Main Stylesheet File -->
-  <link href="css/style.css" rel="stylesheet">
+/* HERO */
+.hero{height:100vh;display:grid;grid-template-columns:1fr 380px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg svg{width:100%;height:100%;opacity:.2}
+.hero-glow{position:absolute;top:10%;right:5%;width:600px;height:600px;background:radial-gradient(circle,rgba(59,130,246,.07) 0%,transparent 65%);pointer-events:none;z-index:0}
+.hero-glow2{position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(29,78,216,.05) 0%,transparent 65%);pointer-events:none;z-index:0}
+.hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:0 56px 72px;position:relative;z-index:2}
+.hero-right{border-left:1px solid var(--border);display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 72px 48px;position:relative;z-index:2}
+.eyebrow-tag{font-family:'Geist Mono',monospace;font-size:10px;color:var(--blue2);letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:14px;margin-bottom:28px;opacity:0;animation:fadeUp .8s .1s both}
+.eyebrow-tag span{width:48px;height:1px;background:var(--blue)}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(64px,8vw,112px);font-weight:400;line-height:.9;letter-spacing:-1px;margin-bottom:36px;opacity:0;animation:fadeUp .8s .2s both}
+.hero-h1 em{font-style:italic;color:var(--blue2)}
+.hero-desc{font-size:14px;color:var(--text2);line-height:1.9;max-width:480px;margin-bottom:48px;font-weight:400;opacity:0;animation:fadeUp .8s .35s both}
+.hero-desc strong{color:var(--text);font-weight:600}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .5s both}
+.btn-primary{font-family:'Geist Mono',monospace;font-size:10px;background:var(--blue);color:#fff;padding:14px 30px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:all .3s;display:inline-flex;align-items:center;gap:10px}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-2px)}
+.btn-outline{font-family:'Geist Mono',monospace;font-size:10px;color:var(--blue2);border:1px solid var(--border2);padding:14px 30px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:all .3s;display:inline-flex;align-items:center;gap:10px}
+.btn-outline:hover{border-color:var(--blue2);background:var(--blue4);transform:translateY(-2px)}
+.hero-right-label{font-family:'Geist Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px}
+.vstat{padding:22px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:baseline}
+.vstat:first-of-type{border-top:1px solid var(--border)}
+.vstat-num{font-family:'Playfair Display',serif;font-size:44px;font-weight:400;color:var(--blue2);letter-spacing:-1px}
+.vstat-label{font-family:'Geist Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.1em;text-align:right;line-height:1.6}
 
-  <!-- =======================================================
-    Theme Name: DevFolio
-    Theme URL: https://bootstrapmade.com/devfolio-bootstrap-portfolio-html-template/
-    Author: BootstrapMade.com
-    License: https://bootstrapmade.com/license/
-  ======================================================= -->
+/* MARQUEE */
+.marquee-wrap{overflow:hidden;padding:13px 0;border-bottom:1px solid var(--border);background:var(--bg2)}
+.marquee-track{display:flex;animation:marquee 28s linear infinite;width:max-content}
+.m-item{font-family:'Geist Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:.15em;text-transform:uppercase;padding:0 28px;border-right:1px solid var(--border)}
+.m-item.hi{color:var(--blue2)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+.section{padding:96px 56px;border-bottom:1px solid var(--border)}
+.eyebrow{font-family:'Geist Mono',monospace;font-size:9px;color:var(--blue2);letter-spacing:.25em;text-transform:uppercase;display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--blue)}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(38px,4.5vw,60px);font-weight:400;line-height:1;margin-bottom:56px}
+.sec-title em{font-style:italic;color:var(--blue2)}
+
+/* CLIENTS */
+.clients-head{display:grid;grid-template-columns:1fr 460px;gap:80px;align-items:end;margin-bottom:48px}
+.clients-note{font-size:13px;color:var(--text2);line-height:1.9}
+.clients-note strong{color:var(--text);font-weight:600}
+.clients-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.c-tile{background:var(--bg2);padding:28px 24px;position:relative;overflow:hidden;transition:background .4s;cursor:default}
+.c-tile::after{content:'';position:absolute;left:0;bottom:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue3),var(--blue2));transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.23,1,.32,1)}
+.c-tile:hover{background:var(--bg3)}
+.c-tile:hover::after{transform:scaleX(1)}
+.c-tile.wide{grid-column:span 2}
+.ct-sector{font-family:'Geist Mono',monospace;font-size:8px;color:var(--text3);letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px}
+.ct-name{font-family:'Playfair Display',serif;font-size:19px;font-weight:400;margin-bottom:5px}
+.ct-region{font-family:'Geist Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.1em}
+.ct-badge{position:absolute;top:18px;right:18px;font-family:'Geist Mono',monospace;font-size:8px;color:var(--blue2);border:1px solid var(--border2);padding:3px 8px;letter-spacing:.1em}
+
+/* PORTFOLIO / SCREENSHOTS */
+.portfolio-intro{font-size:14px;color:var(--text2);line-height:1.85;max-width:640px;margin-bottom:48px}
+.portfolio-intro strong{color:var(--text);font-weight:600}
+.portfolio-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.portfolio-item{background:var(--bg2);position:relative;overflow:hidden;transition:background .4s;cursor:pointer}
+.portfolio-item:hover{background:var(--bg3)}
+.portfolio-item.large{grid-column:span 2}
+.portfolio-item:hover .port-overlay{opacity:1}
+.port-img{width:100%;aspect-ratio:16/9;background:var(--bg3);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.port-img.tall{aspect-ratio:16/10}
+
+/* PLACEHOLDER DASHBOARD MOCKUP */
+.dash-placeholder{width:100%;height:100%;padding:20px;display:flex;flex-direction:column;gap:12px;background:var(--bg3)}
+.dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.dash-title-bar{height:8px;width:140px;background:var(--blue4);border-radius:2px}
+.dash-date{height:7px;width:80px;background:var(--border);border-radius:2px}
+.dash-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dash-kpi{background:var(--bg4);border:1px solid var(--border);padding:12px;border-radius:2px}
+.dash-kpi-val{height:16px;width:60%;background:var(--blue5);border-radius:2px;margin-bottom:6px}
+.dash-kpi-lbl{height:6px;width:80%;background:var(--border);border-radius:2px}
+.dash-charts{display:grid;grid-template-columns:2fr 1fr;gap:8px;flex:1}
+.dash-chart-main{background:var(--bg4);border:1px solid var(--border);border-radius:2px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.dash-chart-title{height:7px;width:100px;background:var(--border);border-radius:2px}
+.dash-bars{display:flex;align-items:flex-end;gap:4px;flex:1;min-height:60px}
+.dash-bar{flex:1;background:var(--blue4);border-radius:2px 2px 0 0;transition:background .3s}
+.dash-bar:nth-child(3){background:var(--blue5)}
+.dash-bar:nth-child(5){background:rgba(59,130,246,.5)}
+.dash-side{display:flex;flex-direction:column;gap:8px}
+.dash-donut{background:var(--bg4);border:1px solid var(--border);border-radius:2px;padding:12px;flex:1;display:flex;align-items:center;justify-content:center}
+.donut-svg{opacity:.6}
+.dash-table{background:var(--bg4);border:1px solid var(--border);border-radius:2px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.dash-row{height:6px;border-radius:2px;background:var(--border)}
+.dash-row:first-child{background:var(--blue4);width:90%}
+.dash-row:nth-child(2){width:75%}
+.dash-row:nth-child(3){width:85%}
+.dash-row:nth-child(4){width:60%}
+
+/* SMALL PLACEHOLDER VARIANT */
+.dash-sm{padding:14px;gap:8px}
+.dash-sm .dash-kpi-row{grid-template-columns:repeat(3,1fr)}
+.dash-sm .dash-bars{min-height:40px}
+
+.port-overlay{position:absolute;inset:0;background:rgba(5,8,15,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:0;transition:opacity .4s;z-index:10}
+.port-overlay-label{font-family:'Geist Mono',monospace;font-size:10px;color:var(--blue2);letter-spacing:.2em;text-transform:uppercase}
+.port-overlay-icon{width:44px;height:44px;border:1px solid var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--blue2)}
+
+.port-info{padding:24px 28px}
+.port-type{font-family:'Geist Mono',monospace;font-size:9px;color:var(--blue2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.port-dot{width:5px;height:5px;border-radius:50%;background:var(--blue2)}
+.port-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin-bottom:8px;line-height:1.2}
+.port-desc{font-size:12px;color:var(--text2);line-height:1.75;margin-bottom:14px}
+.port-tags{display:flex;flex-wrap:wrap;gap:5px}
+.p-tag{font-family:'Geist Mono',monospace;font-size:8px;color:var(--text3);border:1px solid var(--border);padding:4px 10px;letter-spacing:.08em}
+.p-tag.hi{color:var(--blue2);border-color:var(--border2)}
+.upload-hint{display:inline-flex;align-items:center;gap:8px;font-family:'Geist Mono',monospace;font-size:9px;color:var(--blue3);letter-spacing:.1em;background:var(--blue4);border:1px dashed var(--border2);padding:6px 14px;margin-top:10px;border-radius:2px}
+
+/* STACK */
+.stack-cols{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.stack-col{background:var(--bg);padding:52px}
+.col-head{font-family:'Geist Mono',monospace;font-size:9px;color:var(--blue2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.s-row{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid var(--border)}
+.s-row:last-child{border-bottom:none}
+.s-left{display:flex;align-items:center;gap:12px}
+.s-bar-wrap{width:3px;height:26px;background:var(--text4)}
+.s-bar-wrap.core{background:var(--blue)}
+.s-name{font-size:13px;font-weight:500}
+.s-right{display:flex;align-items:center;gap:12px}
+.s-level{font-family:'Geist Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.08em}
+.s-track{width:68px;height:1px;background:var(--border2)}
+.s-fill{height:1px;background:linear-gradient(90deg,var(--blue3),var(--blue2))}
+
+/* PROJECTS */
+.proj-grid{display:grid;gap:1px;background:var(--border)}
+.proj{background:var(--bg2);padding:52px;position:relative;overflow:hidden;transition:background .4s}
+.proj:hover{background:var(--bg3)}
+.proj.two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px}
+.proj.split{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.split-half{padding:52px;border-right:1px solid var(--border)}
+.split-half:last-child{border-right:none}
+.p-idx{font-family:'Playfair Display',serif;font-size:110px;font-weight:400;color:rgba(59,130,246,.04);position:absolute;top:-15px;right:24px;line-height:1;font-style:italic;pointer-events:none}
+.p-type{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.p-dot{width:5px;height:5px;border-radius:50%;background:var(--blue2)}
+.p-type-label{font-family:'Geist Mono',monospace;font-size:9px;color:var(--blue2);letter-spacing:.15em;text-transform:uppercase}
+.p-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;line-height:1.2;margin-bottom:14px}
+.p-desc{font-size:13px;color:var(--text2);line-height:1.85;margin-bottom:22px}
+.p-desc strong{color:var(--text);font-weight:600}
+.p-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:22px}
+.p-tag{font-family:'Geist Mono',monospace;font-size:8px;color:var(--text3);border:1px solid var(--border);padding:4px 10px;letter-spacing:.08em}
+.p-tag.hi{color:var(--blue2);border-color:var(--border2)}
+.p-metrics{display:flex;gap:28px;border-top:1px solid var(--border);padding-top:22px}
+.pm{display:flex;flex-direction:column;gap:4px}
+.pm-val{font-family:'Playfair Display',serif;font-size:26px;color:var(--blue2);font-weight:400;line-height:1}
+.pm-label{font-family:'Geist Mono',monospace;font-size:8px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+.proj-right-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.prs{background:var(--bg3);padding:22px}
+
+/* FREELANCE */
+.fl-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.fl-card{background:var(--bg2);padding:48px;position:relative;overflow:hidden;transition:background .4s}
+.fl-card:hover{background:var(--bg3)}
+.fl-platform{font-family:'Geist Mono',monospace;font-size:8px;color:var(--blue2);letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--border2);padding:4px 12px;display:inline-block;margin-bottom:22px}
+.fl-name{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;margin-bottom:7px}
+.fl-sub{font-family:'Geist Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.12em;margin-bottom:18px}
+.fl-desc{font-size:13px;color:var(--text2);line-height:1.85}
+.fl-desc strong{color:var(--text);font-weight:600}
+.fl-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:18px}
+
+/* EXPERIENCE */
+.exp-list{display:flex;flex-direction:column}
+.exp-item{display:grid;grid-template-columns:200px 1fr;gap:64px;padding:60px 0;border-bottom:1px solid var(--border)}
+.exp-item:last-child{border-bottom:none;padding-bottom:0}
+.exp-period{font-family:'Geist Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:.1em;line-height:1.8;margin-bottom:12px}
+.exp-now-pill{display:inline-flex;align-items:center;gap:6px;font-family:'Geist Mono',monospace;font-size:8px;color:var(--green);border:1px solid rgba(16,185,129,.3);padding:4px 10px;letter-spacing:.1em}
+.exp-now-d{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+.exp-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;margin-bottom:6px}
+.exp-co{font-family:'Geist Mono',monospace;font-size:10px;color:var(--blue2);letter-spacing:.1em;margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.exp-sep{width:16px;height:1px;background:var(--blue3)}
+.exp-bul{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:24px}
+.exp-bul li{font-size:13px;color:var(--text2);line-height:1.8;padding-left:18px;position:relative}
+.exp-bul li::before{content:'';position:absolute;left:0;top:11px;width:7px;height:1px;background:var(--blue3)}
+.exp-bul li strong{color:var(--text);font-weight:600}
+.exp-tags{display:flex;flex-wrap:wrap;gap:5px}
+.exp-tag{font-family:'Geist Mono',monospace;font-size:8px;color:var(--text3);border:1px solid var(--border);padding:3px 10px;letter-spacing:.06em}
+.exp-tag.core{color:var(--blue2);border-color:var(--border2)}
+
+/* EDU */
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.edu-card{background:var(--bg2);padding:34px 30px;transition:background .4s}
+.edu-card:hover{background:var(--bg3)}
+.edu-inst{font-family:'Geist Mono',monospace;font-size:8px;color:var(--blue2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:13px}
+.edu-deg{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;line-height:1.3;margin-bottom:7px}
+.edu-detail{font-size:12px;color:var(--text2)}
+.edu-featured{background:var(--bg3);border-top:2px solid var(--blue)}
+.edu-next{background:transparent;border:1px dashed var(--border2);display:flex;align-items:center;justify-content:center;text-align:center;transition:all .4s}
+.edu-next:hover{background:var(--blue4)}
+
+/* CONTACT */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.contact-l{background:var(--bg2);padding:72px 56px;display:flex;flex-direction:column;justify-content:space-between}
+.contact-r{background:var(--bg2);padding:72px 56px}
+.c-intro{font-size:14px;color:var(--text2);line-height:1.9;margin-bottom:32px}
+.c-avail{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(16,185,129,.3);padding:10px 18px;margin-bottom:32px}
+.c-avail-text{font-family:'Geist Mono',monospace;font-size:10px;color:var(--green);letter-spacing:.1em}
+.c-links{display:flex;flex-direction:column}
+.c-link{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--border);text-decoration:none;transition:all .3s}
+.c-link:first-child{border-top:1px solid var(--border)}
+.c-link:hover .c-arr{transform:translate(3px,-3px);color:var(--blue2)}
+.c-link-info{display:flex;flex-direction:column;gap:3px}
+.c-label{font-family:'Geist Mono',monospace;font-size:8px;color:var(--text3);letter-spacing:.15em;text-transform:uppercase}
+.c-val{font-size:14px;font-weight:500}
+.c-arr{font-size:17px;color:var(--text3);transition:all .3s}
+.langs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.lang{border:1px solid var(--border);padding:16px;text-align:center}
+.lang-name{font-size:14px;font-weight:600;margin-bottom:4px}
+.lang-lvl{font-family:'Geist Mono',monospace;font-size:8px;color:var(--text3);letter-spacing:.1em}
+
+footer{padding:26px 56px;display:flex;justify-content:space-between;align-items:center}
+.f-name{font-family:'Playfair Display',serif;font-size:14px;color:var(--text3);font-style:italic}
+.f-copy{font-family:'Geist Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.12em}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:900px){
+  nav{padding:16px 22px}.nav-links,.avail{display:none}
+  .hero{grid-template-columns:1fr;height:auto;padding-top:80px}
+  .hero-left{padding:48px 22px}.hero-right{display:none}
+  .section{padding:56px 22px}
+  .clients-head,.stack-cols,.fl-grid,.contact-wrap,.proj.two-col,.proj.split{grid-template-columns:1fr}
+  .clients-grid,.edu-grid{grid-template-columns:1fr 1fr}
+  .portfolio-grid{grid-template-columns:1fr}
+  .portfolio-item.large{grid-column:span 1}
+  .exp-item{grid-template-columns:1fr}
+  .split-half{border-right:none;border-bottom:1px solid var(--border)}
+}
+</style>
 </head>
+<body>
 
-<body id="page-top">
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
 
-  <!--/ Nav Star /-->
-  <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll" href="#page-top">MyDataLytics</a>
-      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDefault"
-        aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link js-scroll active" href="#home">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll" href="#about">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll" href="#service">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll" href="#work">Work</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll" href="#contact">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!--/ Nav End /-->
+<nav id="nav">
+  <div class="logo">
+    <div class="logo-mark">HH</div>
+    <span class="logo-text">Houssam Himr</span>
+  </div>
+  <div class="nav-links">
+    <a href="#clients">Clients</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#stack">Stack</a>
+    <a href="#projects">Work</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-r">
+    <div class="avail"><div class="avail-dot"></div>Available Remote</div>
+    <a href="mailto:himrhoussam@gmail.com" class="btn-hire">Hire Me</a>
+  </div>
+</nav>
 
-  <!--/ Intro Skew Star /-->
-  <div id="home" class="intro route bg-image" style="background-image: url(img/Test-reda.jpg)">
-    <div class="overlay-itro"></div>
-    <div class="intro-content display-table">
-      <div class="table-cell">
-        <div class="container">
-          <!--<p class="display-6 color-d">Hello, world!</p>-->
-          <h1 class="intro-title mb-4">I'm Houssam Himr</h1>
-          <p class="intro-subtitle"><span class="text-slider-items">Business Intelligence Analyst,Data Scientist</span><strong class="text-slider"></strong></p>
-          <!-- <p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="#about" role="button">Learn More</a></p> -->
-        </div>
-      </div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg">
+    <svg viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs><pattern id="g" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0L0 0 0 80" fill="none" stroke="rgba(59,130,246,0.18)" stroke-width="0.5"/></pattern></defs>
+      <rect width="100%" height="100%" fill="url(#g)"/>
+      <line x1="0" y1="900" x2="700" y2="0" stroke="rgba(59,130,246,0.07)" stroke-width="1"/>
+      <line x1="300" y1="900" x2="1100" y2="0" stroke="rgba(59,130,246,0.04)" stroke-width="1"/>
+      <circle cx="950" cy="180" r="320" fill="none" stroke="rgba(59,130,246,0.05)" stroke-width="1"/>
+      <circle cx="950" cy="180" r="200" fill="none" stroke="rgba(59,130,246,0.07)" stroke-width="1"/>
+      <circle cx="950" cy="180" r="90" fill="none" stroke="rgba(59,130,246,0.1)" stroke-width="1"/>
+    </svg>
+  </div>
+  <div class="hero-glow"></div><div class="hero-glow2"></div>
+  <div class="hero-left">
+    <div class="eyebrow-tag"><span></span>Analytics Engineer · BI Lead · Remote Worldwide</div>
+    <h1 class="hero-h1">Houssam<br><em>Himr</em></h1>
+    <p class="hero-desc">Building <strong>end-to-end data ecosystems</strong> for global enterprises. From raw database schemas to executive KPI dashboards — 5+ years delivering reporting infrastructure across <strong>North Africa, GCC, and beyond</strong>.</p>
+    <div class="hero-btns">
+      <a href="#portfolio" class="btn-primary">See Dashboards ↓</a>
+      <a href="#projects" class="btn-outline">Case Studies ↗</a>
+      <a href="https://linkedin.com/in/himrhoussam" target="_blank" class="btn-outline">LinkedIn ↗</a>
     </div>
   </div>
-  <!--/ Intro Skew End /-->
-
-  <section id="about" class="about-mf sect-pt4 route">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="box-shadow-full">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="col-sm-6 col-md-5">
-                    <div class="about-img">
-                      <img src="img/DSC_0625.jpg" class="img-fluid rounded b-shadow-a" alt="">
-                    </div>
-                  </div>
-                  <div class="col-sm-6 col-md-7">
-                    <div class="about-info">
-                      <p><span class="title-s">Full name: </span> <span>Houssam Himr</span></p>
-                      <p><span class="title-s">Profile: </span> <span>Business Intelligence Analyst</span></p>
-                      <p><span class="title-s">Email: </span> <span>himrhoussam@gmail.com</span></p>
-                      <p><span class="title-s">Phone: </span> <span>(+212) 682-140413</span></p>
-                    </div>
-                  </div>
-                </div>
-                <div class="skill-mf">
-                  <p class="title-s">Skill</p>
-                  <span>Looker Studio</span> <span class="pull-right">90%</span>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                  <span>Power BI</span> <span class="pull-right">75%</span>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                  <span>Excel</span> <span class="pull-right">85%</span>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                  <span>SQL</span> <span class="pull-right">70%</span>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow=70" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                  <span>Python</span> <span class="pull-right">60%</span>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                  <span>Tableau</span> <span class="pull-right">50%</span>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="about-me pt-4 pt-md-0">
-                  <div class="title-box-2">
-                    <h5 class="title-left">
-                      About me
-                    </h5>
-                  </div>
-                  <p class="lead">
-                    I'm a Business Intelligence Analyst and Data Scientist with expertise in extracting insights from data using SQL, Excel, and Python. 
-                  </p>
-                  <p class="lead">
-                    My skills in data visualization and creating interactive dashboards using Looker Studio, Tableau and Power BI allow me to communicate insights to stakeholders. With a focus on providing strategic recommendations based on my findings, I work closely with business leaders to achieve measurable results.
-                  </p>
-                  <p class="lead">
-                    My ability to explain complex data insights in a clear, concise, and actionable way is one of my greatest strengths.
-                  </p>
-                  <p class="lead">
-                    I am passionate about using data to drive business success and am always looking for innovative ways to leverage data to improve processes and make informed decisions.
-                  </p>
-                </div>
-              </div>
-
-				<!-- The elevator pitch video Button -->
-				<div class="col-md-3">
-					<a href="https://youtu.be/KfbxL494Bu4" target="_blank">
-						<button type="submit" class="button button-b button-big button-rouded">Elevator Pitch</button>
-					</a>
-				</div>
-				
-				<!-- The skills map Button -->
-				<div class="col-md-3">
-					<a href="" target="_blank">
-						<button type="submit" class="button button-b button-big button-rouded">Download CV</button>
-					</a>
-				</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!--/ Section Services Star /-->
-  <section id="service" class="services-mf route">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="title-box text-center">
-            <h3 class="title-a">
-              SERVICES
-            </h3>
-            <p class="subtitle-a">
-              Get the most out of your data with my specialized skills in data cleaning, analysis, interpretation, and visualization.
-            </p>
-            <div class="line-mf"></div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="service-box">
-            <div class="service-ico">
-              <span class="ico-circle"><i class="ion-settings"></i></span>
-            </div>
-            <div class="service-content">
-              <h2 class="s-title">Data Management</h2>
-              <p class="s-description text-center">
-                Data harvesting, cleaning and reshaping. Development of automated workflows.ㅤㅤㅤㅤㅤ
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="service-box">
-            <div class="service-ico">
-              <span class="ico-circle"><i class="ion-search"></i></span>
-            </div>
-            <div class="service-content">
-              <h2 class="s-title">Data Mining</h2>
-              <p class="s-description text-center">
-                Data exploration, application of statistical methods, reproducible data analysis.ㅤㅤㅤㅤㅤ
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="service-box">
-            <div class="service-ico">
-              <span class="ico-circle"><i class="ion-stats-bars"></i></span>
-            </div>
-            <div class="service-content">
-              <h2 class="s-title">Data visualization</h2>
-              <p class="s-description text-center">
-                Creation of static and interactive dataviz and dashboards, review of scientific figures.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!--/ Section Services End /-->
-
-  <div class="section-counter paralax-mf bg-image" style="background-image: url(img/counters-bg.jpg)">
-    <div class="overlay-mf"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-3 col-lg-3">
-          <div class="counter-box">
-            <div class="counter-ico">
-              <span class="ico-circle"><i class="ion-checkmark-round"></i></span>
-            </div>
-            <div class="counter-num">
-              <p class="counter">43</p>
-              <span class="counter-text">WORKS COMPLETED</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3 col-lg-3">
-          <div class="counter-box pt-4 pt-md-0">
-            <div class="counter-ico">
-              <span class="ico-circle"><i class="ion-ios-calendar-outline"></i></span>
-            </div>
-            <div class="counter-num">
-              <p class="counter">03</p>
-              <span class="counter-text">YEARS OF EXPERIENCE</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3 col-lg-3">
-          <div class="counter-box pt-4 pt-md-0">
-            <div class="counter-ico">
-              <span class="ico-circle"><i class="ion-ios-people"></i></span>
-            </div>
-            <div class="counter-num">
-              <p class="counter">14</p>
-              <span class="counter-text">TOTAL CLIENTS</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3 col-lg-3">
-          <div class="counter-box pt-4 pt-md-0">
-            <div class="counter-ico">
-              <span class="ico-circle"><i class="ion-ribbon-a"></i></span>
-            </div>
-            <div class="counter-num">
-              <p class="counter">7</p>
-              <span class="counter-text">AWARD WON</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="hero-right">
+    <div class="hero-right-label">Impact in numbers</div>
+    <div class="vstat"><span class="vstat-num">16+</span><span class="vstat-label">Enterprise<br>Clients</span></div>
+    <div class="vstat"><span class="vstat-num">5yr</span><span class="vstat-label">Hands-on<br>Experience</span></div>
+    <div class="vstat"><span class="vstat-num">4</span><span class="vstat-label">Markets<br>MA·TN·KSA·UAE</span></div>
+    <div class="vstat"><span class="vstat-num">40+</span><span class="vstat-label">Dashboards<br>Delivered</span></div>
   </div>
+</div>
 
-  <!--/ Section Portfolio Star /-->
-  <section id="work" class="portfolio-mf sect-pt4 route">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="title-box text-center">
-            <h3 class="title-a">
-              PORTFOLIO
-            </h3>
-            <p class="subtitle-a">
-              A Glimpse of the projects I've been working on.
-            </p>
-            <div class="line-mf"></div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="work-box">
-            <a href="img/KpisTransportReporting.png" data-lightbox="gallery-mf">
-              <div class="work-img">
-                <img src="img/KpisTransportReporting.png" alt="" class="img-fluid">
-              </div>
-              <div class="work-content">
-                <div class="row">
-                  <div class="col-sm-8">
-                    <h2 class="w-title">Transport Reporting</h2>
-                    <div class="w-more">
-                      <span class="w-ctegory">Dashboard</span> / <span class="w-date">2023</span>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="w-like">
-                      <span class="ion-ios-plus-outline"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="work-box">
-            <a href="img/GrowthReporting.png" data-lightbox="gallery-mf">
-              <div class="work-img">
-                <img src="img/GrowthReporting.png" alt="" class="img-fluid">
-              </div>
-              <div class="work-content">
-                <div class="row">
-                  <div class="col-sm-8">
-                    <h2 class="w-title">Growth Reporting</h2>
-                    <div class="w-more">
-                      <span class="w-ctegory">Dashboard</span> / <span class="w-date">2022</span>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="w-like">
-                      <span class="ion-ios-plus-outline"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="work-box">
-            <a href="img/SprintsReporting.jpg" data-lightbox="gallery-mf">
-              <div class="work-img">
-                <img src="img/SprintsReporting.jpg" alt="" class="img-fluid">
-              </div>
-              <div class="work-content">
-                <div class="row">
-                  <div class="col-sm-8">
-                    <h2 class="w-title">Sprints Reporting</h2>
-                    <div class="w-more">
-                      <span class="w-ctegory">Dashboard</span> / <span class="w-date">2022</span>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="w-like">
-                      <span class="ion-ios-plus-outline"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="work-box">
-            <a href="img/Kpisclientreporting.png" data-lightbox="gallery-mf">
-              <div class="work-img">
-                <img src="img/Kpisclientreporting.png" alt="" class="img-fluid">
-              </div>
-              <div class="work-content">
-                <div class="row">
-                  <div class="col-sm-8">
-                    <h2 class="w-title">Kpis Client Reporting</h2>
-                    <div class="w-more">
-                      <span class="w-ctegory">Dashboard</span> / <span class="w-date">2022</span>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="w-like">
-                      <span class="ion-ios-plus-outline"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="work-box">
-            <a href="img/AMReporting.jpg" data-lightbox="gallery-mf">
-              <div class="work-img">
-                <img src="img/AMReporting.jpg" alt="" class="img-fluid">
-              </div>
-              <div class="work-content">
-                <div class="row">
-                  <div class="col-sm-8">
-                    <h2 class="w-title">AM Reporting</h2>
-                    <div class="w-more">
-                      <span class="w-ctegory">Dashboard</span> / <span class="w-date">2021</span>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="w-like">
-                      <span class="ion-ios-plus-outline"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="work-box">
-            <a href="img/SalesReporting.jpg" data-lightbox="gallery-mf">
-              <div class="work-img">
-                <img src="img/SalesReporting.jpg" alt="" class="img-fluid">
-              </div>
-              <div class="work-content">
-                <div class="row">
-                  <div class="col-sm-8">
-                    <h2 class="w-title">Sales Reporting</h2>
-                    <div class="w-more">
-                      <span class="w-ctegory">Dashboard</span> / <span class="w-date">2021</span>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="w-like">
-                      <span class="ion-ios-plus-outline"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        
-      </div>
-    </div>
-  </section>
-  <!--/ Section Portfolio End /-->
-  
-  
-<section id="about" class="about-mf sect-pt4 route">
-	<div class="container">
-		<div class="row">
-			
-			<!-- The section title -->
-			<div class="col-sm-12">
-				<div class="title-box text-center">
-					<h3 class="title-a">
-						SLIDE DECK Project
-					</h3>
-					<p class="subtitle-a">
-						The projects I've been working on with <b>TEAM HASHIRA</b>.
-					</p>
-					<div class="line-mf"></div>
-				</div>
-			</div>
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="m-item hi">Looker Studio</span><span class="m-item">dbt Core</span><span class="m-item">BigQuery</span><span class="m-item hi">SQL Expert</span><span class="m-item">Power BI</span><span class="m-item">Python</span><span class="m-item hi">Analytics Engineering</span><span class="m-item">Metabase</span><span class="m-item">MySQL</span><span class="m-item hi">BI Lead</span><span class="m-item">TestCafe</span><span class="m-item">North Africa</span><span class="m-item hi">GCC Markets</span><span class="m-item">Remote Worldwide</span><span class="m-item hi">Looker Studio</span><span class="m-item">dbt Core</span><span class="m-item">BigQuery</span><span class="m-item hi">SQL Expert</span><span class="m-item">Power BI</span><span class="m-item">Python</span><span class="m-item hi">Analytics Engineering</span><span class="m-item">Metabase</span><span class="m-item">MySQL</span><span class="m-item hi">BI Lead</span><span class="m-item">TestCafe</span><span class="m-item">North Africa</span><span class="m-item hi">GCC Markets</span><span class="m-item">Remote Worldwide</span>
+  </div>
+</div>
 
-			<!-- The PDF overview -->
-			<div class="col-md-12 mb-1">
-				<embed src="docs/Mentorship_App_Presentation.pdf" type="application/pdf" width="100%" height="600px">
-			</div>
-			
-			<!--The download button-->
-			<div class="col-md-6">
-				<a href="docs/Mentorship_App_Presentation.pdf" download>
-					<button type="submit" class="button button-a btn-lg button-rouded">Download PDF</button>
-				</a>
-			</div>
-			
-			<!-- The video link -->
-			<div class="col-md-6">
-				<a href="https://www.youtube.com/watch?v=1ngop2tM-i0" target="_blank" download>
-					<button type="submit" class="button button-a btn-lg button-rouded">Video Link</button>
-				</a>
-			</div>
-			
-		</div>
-	</div>
+<!-- CLIENTS -->
+<section class="section" id="clients">
+  <div class="eyebrow">Enterprise Clients</div>
+  <div class="clients-head">
+    <h2 class="sec-title">Companies I've built<br><em>reporting for</em></h2>
+    <p class="clients-note">Every dashboard was architected, designed, and deployed by me — covering <strong>transport KPIs, supply chain visibility, fleet tracking, delivery performance, and executive reporting</strong> via Looker Studio connected to live MySQL and BigQuery.</p>
+  </div>
+  <div class="clients-grid">
+    <div class="c-tile wide"><div class="ct-sector">FMCG · Beverages</div><div class="ct-name">Pepsi · Varun Beverages</div><div class="ct-region">Morocco</div><div class="ct-badge">Flagship</div></div>
+    <div class="c-tile"><div class="ct-sector">Logistics</div><div class="ct-name">Emirates Logistics</div><div class="ct-region">KSA · UAE</div></div>
+    <div class="c-tile"><div class="ct-sector">Industrial Gas</div><div class="ct-name">Air Liquide</div><div class="ct-region">Morocco</div></div>
+    <div class="c-tile"><div class="ct-sector">Retail</div><div class="ct-name">Marjane</div><div class="ct-region">Morocco</div></div>
+    <div class="c-tile"><div class="ct-sector">Retail · Electronics</div><div class="ct-name">Electroplanet</div><div class="ct-region">Morocco</div></div>
+    <div class="c-tile"><div class="ct-sector">FMCG</div><div class="ct-name">Danone</div><div class="ct-region">Morocco</div></div>
+    <div class="c-tile"><div class="ct-sector">Retail</div><div class="ct-name">Monoprix</div><div class="ct-region">Tunisia</div></div>
+    <div class="c-tile"><div class="ct-sector">FMCG · Snacks</div><div class="ct-name">Mondelez</div><div class="ct-region">Morocco</div></div>
+    <div class="c-tile"><div class="ct-sector">E-Commerce</div><div class="ct-name">OKI DOKI</div><div class="ct-region">Indonesia</div><div class="ct-badge">Asia</div></div>
+    <div class="c-tile"><div class="ct-sector">Retail</div><div class="ct-name">Carrefour</div><div class="ct-region">Morocco</div></div>
+    <div class="c-tile"><div class="ct-sector">Retail · Furniture</div><div class="ct-name">Kitea</div><div class="ct-region">Morocco</div></div>
+    <div class="c-tile"><div class="ct-sector">Mining</div><div class="ct-name">Managem</div><div class="ct-region">Morocco</div></div>
+    <div class="c-tile"><div class="ct-sector">Beverages</div><div class="ct-name">Sotherma</div><div class="ct-region">Morocco</div></div>
+    <div class="c-tile"><div class="ct-sector">Distribution</div><div class="ct-name">Binzagar</div><div class="ct-region">KSA</div><div class="ct-badge">GCC</div></div>
+    <div class="c-tile"><div class="ct-sector">Logistics</div><div class="ct-name">Marotrans</div><div class="ct-region">Morocco</div></div>
+    <div class="c-tile"><div class="ct-sector">E-Commerce</div><div class="ct-name">Jumia</div><div class="ct-region">Morocco</div></div>
+  </div>
 </section>
 
-  <!--/ Section Testimonials Star /-->
-  <!--
-    <div class="testimonials paralax-mf bg-image" style="background-image: url(img/overlay-bg.jpg)">
-    <div class="overlay-mf"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div id="testimonial-mf" class="owl-carousel owl-theme">
-            <div class="testimonial-box">
-              <div class="author-test">
-                <img src="img/DSC_0625.jpg" alt="" class="rounded-circle b-shadow-a">
-                <span class="author">Xavi Alonso</span>
-              </div>
-              <div class="content-test">
-                <p class="description lead">
-                  Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit.
-                </p>
-                <span class="comit"><i class="fa fa-quote-right"></i></span>
-              </div>
-            </div>
-            <div class="testimonial-box">
-              <div class="author-test">
-                <img src="img/testimonial-4.jpg" alt="" class="rounded-circle b-shadow-a">
-                <span class="author">Marta Socrate</span>
-              </div>
-              <div class="content-test">
-                <p class="description lead">
-                  Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit.
-                </p>
-                <span class="comit"><i class="fa fa-quote-right"></i></span>
-              </div>
-            </div>
-          </div>
+<!-- PORTFOLIO / DASHBOARD SCREENSHOTS -->
+<section class="section" id="portfolio">
+  <div class="eyebrow">Dashboard Portfolio</div>
+  <h2 class="sec-title">Reporting <em>Gallery</em></h2>
+  <p class="portfolio-intro">A selection of dashboards and reporting solutions delivered across enterprise clients and freelance mandates. Built with <strong>Looker Studio, dbt, and BigQuery</strong> — covering transport, retail, FMCG, and marketing analytics. <span style="color:var(--blue2)">↓ Replace placeholders with your real screenshots</span></p>
+
+  <!-- LIGHTBOX OVERLAY -->
+  <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(5,8,15,.96);z-index:9000;align-items:center;justify-content:center;flex-direction:column;gap:20px;backdrop-filter:blur(12px)" onclick="closeLB()">
+    <div style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px" id="lb-label"></div>
+    <img id="lb-img" src="" alt="" style="max-width:90vw;max-height:82vh;object-fit:contain;border:1px solid var(--border2);box-shadow:0 0 80px rgba(59,130,246,.15)">
+    <div style="font-family:'Geist Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:.15em">Click anywhere to close</div>
+  </div>
+
+  <div class="portfolio-grid">
+
+    <!-- ITEM 1 — LARGE: Transport KPI -->
+    <div class="portfolio-item large">
+      <div class="port-img tall" onclick="openLB('KpisTransportReporting.png','Transport KPI Dashboard · Freterium')" style="cursor:zoom-in">
+        <img src="img/KpisTransportReporting.png" alt="Transport KPI Dashboard" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease">
+        <div class="port-overlay"><div class="port-overlay-icon">⤢</div><div class="port-overlay-label">Expand View</div></div>
+      </div>
+      <div class="port-info">
+        <div class="port-type"><div class="port-dot"></div>Transport KPI Dashboard · Freterium · 2023–2025</div>
+        <div class="port-title">Multinational Transport Reporting</div>
+        <p class="port-desc">Real-time fleet tracking, delivery performance, SLA compliance, and financial KPIs for enterprise logistics clients across Morocco, KSA, UAE, and beyond.</p>
+        <div class="port-tags">
+          <span class="p-tag hi">Looker Studio</span><span class="p-tag hi">dbt</span><span class="p-tag hi">BigQuery</span><span class="p-tag">Transport KPIs</span><span class="p-tag">SLA Tracking</span><span class="p-tag">Fleet Analytics</span>
         </div>
+      </div>
+    </div>
+
+    <!-- ITEM 2: Growth Reporting -->
+    <div class="portfolio-item">
+      <div class="port-img" onclick="openLB('GrowthReporting.png','Growth Reporting · Freterium')" style="cursor:zoom-in">
+        <img src="img/GrowthReporting.png" alt="Growth Reporting" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease">
+        <div class="port-overlay"><div class="port-overlay-icon">⤢</div><div class="port-overlay-label">Expand View</div></div>
+      </div>
+      <div class="port-info">
+        <div class="port-type"><div class="port-dot"></div>Growth Reporting · Freterium · 2022</div>
+        <div class="port-title">Startup Growth Dashboard</div>
+        <p class="port-desc">Company-wide growth tracking — MRR, client acquisition, churn, and workforce efficiency. Used directly in investor reporting and Series A fundraising.</p>
+        <div class="port-tags"><span class="p-tag hi">Looker Studio</span><span class="p-tag hi">Metabase</span><span class="p-tag">Growth KPIs</span><span class="p-tag">Investor Reporting</span></div>
+      </div>
+    </div>
+
+    <!-- ITEM 3: Sprints Reporting -->
+    <div class="portfolio-item">
+      <div class="port-img" onclick="openLB('SprintsReporting.jpg','Sprints Reporting · Freterium')" style="cursor:zoom-in">
+        <img src="img/SprintsReporting.jpg" alt="Sprints Reporting" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease">
+        <div class="port-overlay"><div class="port-overlay-icon">⤢</div><div class="port-overlay-label">Expand View</div></div>
+      </div>
+      <div class="port-info">
+        <div class="port-type"><div class="port-dot"></div>Sprint & Team Tracking · Freterium · 2022</div>
+        <div class="port-title">Agile Sprint Performance</div>
+        <p class="port-desc">Real-time sprint velocity, task completion rates, and team productivity tracking across Tech, CS, and Sales — integrated from ClickUp into Looker Studio.</p>
+        <div class="port-tags"><span class="p-tag hi">ClickUp API</span><span class="p-tag hi">dbt</span><span class="p-tag">Sprint KPIs</span><span class="p-tag">Team Analytics</span></div>
+      </div>
+    </div>
+
+    <!-- ITEM 4: KPIs Client Reporting -->
+    <div class="portfolio-item">
+      <div class="port-img" onclick="openLB('Kpisclientreporting.png','KPIs Client Reporting · Freterium')" style="cursor:zoom-in">
+        <img src="img/Kpisclientreporting.png" alt="KPIs Client Reporting" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease">
+        <div class="port-overlay"><div class="port-overlay-icon">⤢</div><div class="port-overlay-label">Expand View</div></div>
+      </div>
+      <div class="port-info">
+        <div class="port-type"><div class="port-dot"></div>Client KPI Reporting · Freterium · 2022</div>
+        <div class="port-title">Enterprise Client KPIs</div>
+        <p class="port-desc">Custom KPI reporting suite per enterprise client — delivery rates, SLA compliance, cost per route, and operational efficiency metrics surfaced for account managers.</p>
+        <div class="port-tags"><span class="p-tag hi">Looker Studio</span><span class="p-tag">Client KPIs</span><span class="p-tag">SLA</span><span class="p-tag">Operations</span></div>
+      </div>
+    </div>
+
+    <!-- ITEM 5: AM Reporting -->
+    <div class="portfolio-item">
+      <div class="port-img" onclick="openLB('AMReporting.jpg','AM Reporting · Freterium')" style="cursor:zoom-in">
+        <img src="img/AMReporting.jpg" alt="AM Reporting" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease">
+        <div class="port-overlay"><div class="port-overlay-icon">⤢</div><div class="port-overlay-label">Expand View</div></div>
+      </div>
+      <div class="port-info">
+        <div class="port-type"><div class="port-dot"></div>Account Management · Freterium · 2021</div>
+        <div class="port-title">Account Manager Reporting</div>
+        <p class="port-desc">Performance dashboard for account managers — client portfolio health, revenue per account, renewal risk, and activity tracking in one view.</p>
+        <div class="port-tags"><span class="p-tag hi">Looker Studio</span><span class="p-tag">AM Performance</span><span class="p-tag">Revenue</span><span class="p-tag">Client Health</span></div>
+      </div>
+    </div>
+
+    <!-- ITEM 6: Sales Reporting -->
+    <div class="portfolio-item">
+      <div class="port-img" onclick="openLB('SalesReporting.jpg','Sales Reporting · Freterium')" style="cursor:zoom-in">
+        <img src="img/SalesReporting.jpg" alt="Sales Reporting" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease">
+        <div class="port-overlay"><div class="port-overlay-icon">⤢</div><div class="port-overlay-label">Expand View</div></div>
+      </div>
+      <div class="port-info">
+        <div class="port-type"><div class="port-dot"></div>Sales Analytics · Freterium · 2021</div>
+        <div class="port-title">Sales Performance Dashboard</div>
+        <p class="port-desc">Full sales funnel visibility — pipeline by stage, conversion rates, individual rep performance, deal velocity, and revenue forecasting.</p>
+        <div class="port-tags"><span class="p-tag hi">Looker Studio</span><span class="p-tag hi">SQL</span><span class="p-tag">Sales KPIs</span><span class="p-tag">Forecasting</span><span class="p-tag">Pipeline</span></div>
+      </div>
+    </div>
+
+    <!-- MORE COMING -->
+    <div class="portfolio-item large" style="background:var(--bg);border:1px dashed var(--border2)">
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:160px;gap:14px;padding:40px;text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:52px;font-style:italic;color:var(--blue3)">+</div>
+        <div style="font-size:15px;color:var(--text2)">More dashboards — Animalkom, Salescopy & others coming soon</div>
+        <a href="mailto:himrhoussam@gmail.com" style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--blue2);border:1px solid var(--border2);padding:10px 22px;letter-spacing:.1em;text-decoration:none;text-transform:uppercase;margin-top:4px">Request a full demo ↗</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="section" id="stack" style="padding:0">
+  <div style="padding:64px 56px 0"><div class="eyebrow">Tech Stack</div><h2 class="sec-title">Tools I <em>master</em></h2></div>
+  <div class="stack-cols">
+    <div class="stack-col">
+      <div class="col-head">Analytics Engineering & BI</div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap core"></div><span class="s-name">dbt Core</span></div><div class="s-right"><span class="s-level">Expert</span><div class="s-track"><div class="s-fill" style="width:88%"></div></div></div></div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap core"></div><span class="s-name">Looker Studio</span></div><div class="s-right"><span class="s-level">Expert</span><div class="s-track"><div class="s-fill" style="width:93%"></div></div></div></div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap core"></div><span class="s-name">BigQuery</span></div><div class="s-right"><span class="s-level">Advanced</span><div class="s-track"><div class="s-fill" style="width:80%"></div></div></div></div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap core"></div><span class="s-name">SQL — Advanced</span></div><div class="s-right"><span class="s-level">Expert</span><div class="s-track"><div class="s-fill" style="width:91%"></div></div></div></div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap"></div><span class="s-name">Power BI</span></div><div class="s-right"><span class="s-level">Advanced</span><div class="s-track"><div class="s-fill" style="width:76%"></div></div></div></div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap"></div><span class="s-name">Metabase</span></div><div class="s-right"><span class="s-level">Advanced</span><div class="s-track"><div class="s-fill" style="width:74%"></div></div></div></div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap"></div><span class="s-name">Google Analytics 4</span></div><div class="s-right"><span class="s-level">Advanced</span><div class="s-track"><div class="s-fill" style="width:72%"></div></div></div></div>
+    </div>
+    <div class="stack-col">
+      <div class="col-head">Data Science & Engineering</div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap core"></div><span class="s-name">Python · Pandas · NumPy</span></div><div class="s-right"><span class="s-level">Advanced</span><div class="s-track"><div class="s-fill" style="width:76%"></div></div></div></div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap core"></div><span class="s-name">MySQL · phpMyAdmin</span></div><div class="s-right"><span class="s-level">Expert</span><div class="s-track"><div class="s-fill" style="width:89%"></div></div></div></div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap"></div><span class="s-name">Machine Learning (Scikit-learn)</span></div><div class="s-right"><span class="s-level">Intermediate</span><div class="s-track"><div class="s-fill" style="width:60%"></div></div></div></div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap"></div><span class="s-name">Materialized Views</span></div><div class="s-right"><span class="s-level">Advanced</span><div class="s-track"><div class="s-fill" style="width:82%"></div></div></div></div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap"></div><span class="s-name">TestCafe — QA Automation</span></div><div class="s-right"><span class="s-level">Advanced</span><div class="s-track"><div class="s-fill" style="width:79%"></div></div></div></div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap"></div><span class="s-name">Git · GitHub</span></div><div class="s-right"><span class="s-level">Intermediate</span><div class="s-track"><div class="s-fill" style="width:58%"></div></div></div></div>
+      <div class="s-row"><div class="s-left"><div class="s-bar-wrap"></div><span class="s-name">Excel · Advanced Analytics</span></div><div class="s-right"><span class="s-level">Expert</span><div class="s-track"><div class="s-fill" style="width:86%"></div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES / PROJECTS -->
+<section class="section" id="projects" style="padding-left:0;padding-right:0;padding-bottom:0">
+  <div style="padding:64px 56px 0"><div class="eyebrow">Case Studies</div><h2 class="sec-title">Projects & <em>Impact</em></h2></div>
+  <div class="proj-grid">
+    <div class="proj two-col">
+      <div>
+        <div class="p-idx" style="right:auto;left:-10px">01</div>
+        <div class="p-type"><div class="p-dot"></div><span class="p-type-label">Flagship · Looker Studio · dbt · BigQuery</span></div>
+        <h3 class="p-title">Multinational Transport KPI Ecosystem</h3>
+        <p class="p-desc">Architected complete reporting infrastructure for <strong>16+ enterprise accounts</strong> across Morocco, Tunisia, KSA, UAE, and Indonesia. Custom Looker Studio dashboards powered by dbt models and materialized views on BigQuery.</p>
+        <div class="p-tags">
+          <span class="p-tag hi">Looker Studio</span><span class="p-tag hi">dbt Core</span><span class="p-tag hi">BigQuery</span><span class="p-tag">MySQL</span><span class="p-tag">Materialized Views</span><span class="p-tag">SLA Tracking</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:flex-end;border-left:1px solid var(--border);padding-left:64px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-bottom:28px">
+          <div class="prs"><div class="pm-val">16+</div><div class="pm-label">Enterprise Clients</div></div>
+          <div class="prs"><div class="pm-val">~60%</div><div class="pm-label">Load Time Reduced</div></div>
+          <div class="prs"><div class="pm-val">4</div><div class="pm-label">Markets Active</div></div>
+          <div class="prs"><div class="pm-val">100%</div><div class="pm-label">Adoption Rate</div></div>
+        </div>
+        <p style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--text3);line-height:1.8;letter-spacing:.06em">Pepsi · Emirates Logistics · Danone · Mondelez · Air Liquide · Managem · Carrefour · Kitea · Marjane · Electroplanet · Monoprix · Sotherma · Binzagar · Marotrans · OKI DOKI · Jumia</p>
+      </div>
+    </div>
+    <div class="proj split" style="padding:0">
+      <div class="split-half">
+        <div class="p-idx">02</div>
+        <div class="p-type"><div class="p-dot"></div><span class="p-type-label">Data Engineering · dbt · ClickUp API</span></div>
+        <h3 class="p-title">ClickUp → BI Pipeline</h3>
+        <p class="p-desc">dbt pipeline integrating <strong>ClickUp API</strong> into BigQuery — real-time sprint velocity, task completion, SLA compliance for Tech, CS & Sales leadership in one unified dashboard.</p>
+        <div class="p-tags"><span class="p-tag hi">dbt</span><span class="p-tag hi">ClickUp API</span><span class="p-tag hi">BigQuery</span><span class="p-tag">Looker Studio</span><span class="p-tag">Sprint KPIs</span></div>
+        <div class="p-metrics"><div class="pm"><span class="pm-val">3</span><span class="pm-label">Teams Tracked</span></div><div class="pm"><span class="pm-val">Live</span><span class="pm-label">Real-time</span></div></div>
+      </div>
+      <div class="split-half" style="border-right:none">
+        <div class="p-idx">03</div>
+        <div class="p-type"><div class="p-dot"></div><span class="p-type-label">BI · Investor Reporting</span></div>
+        <h3 class="p-title">Startup KPI Framework</h3>
+        <p class="p-desc">Freterium's <strong>first-ever investor KPI framework</strong> — MRR, churn, CAC, LTV, workforce efficiency. Used directly in Series A fundraising and board meetings.</p>
+        <div class="p-tags"><span class="p-tag hi">Metabase</span><span class="p-tag hi">SQL</span><span class="p-tag">ClickUp</span><span class="p-tag">Growth KPIs</span><span class="p-tag">Investor Deck</span></div>
+        <div class="p-metrics"><div class="pm"><span class="pm-val">Series A</span><span class="pm-label">Fundraising used</span></div></div>
       </div>
     </div>
   </div>
--->
+</section>
 
-  <!--/ Section Blog Star /-->
-  <!--
-  <section id="blog" class="blog-mf sect-pt4 route">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="title-box text-center">
-            <h3 class="title-a">
-              BLOG
-            </h3>
-            <p class="subtitle-a">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            </p>
-            <div class="line-mf"></div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card card-blog">
-            <div class="card-img">
-              <a href="blog-single.html"><img src="img/post-1.jpg" alt="" class="img-fluid"></a>
-            </div>
-            <div class="card-body">
-              <div class="card-category-box">
-                <div class="card-category">
-                  <h6 class="category">Travel</h6>
-                </div>
-              </div>
-              <h3 class="card-title"><a href="blog-single.html">See more ideas about Travel</a></h3>
-              <p class="card-description">
-                Proin eget tortor risus. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis
-                a pellentesque nec,
-                egestas non nisi.
-              </p>
-            </div>
-            <div class="card-footer">
-              <div class="post-author">
-                <a href="#">
-                  <img src="img/DSC_0625.jpg" alt="" class="avatar rounded-circle">
-                  <span class="author">Houssam Himr</span>
-                </a>
-              </div>
-              <div class="post-date">
-                <span class="ion-ios-clock-outline"></span> 10 min
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card card-blog">
-            <div class="card-img">
-              <a href="blog-single.html"><img src="img/post-2.jpg" alt="" class="img-fluid"></a>
-            </div>
-            <div class="card-body">
-              <div class="card-category-box">
-                <div class="card-category">
-                  <h6 class="category">Web Design</h6>
-                </div>
-              </div>
-              <h3 class="card-title"><a href="blog-single.html">See more ideas about Travel</a></h3>
-              <p class="card-description">
-                Proin eget tortor risus. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis
-                a pellentesque nec,
-                egestas non nisi.
-              </p>
-            </div>
-            <div class="card-footer">
-              <div class="post-author">
-                <a href="#">
-                  <img src="img/DSC_0625.jpg" alt="" class="avatar rounded-circle">
-                  <span class="author">Houssam Himr</span>
-                </a>
-              </div>
-              <div class="post-date">
-                <span class="ion-ios-clock-outline"></span> 10 min
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card card-blog">
-            <div class="card-img">
-              <a href="blog-single.html"><img src="img/post-3.jpg" alt="" class="img-fluid"></a>
-            </div>
-            <div class="card-body">
-              <div class="card-category-box">
-                <div class="card-category">
-                  <h6 class="category">Web Design</h6>
-                </div>
-              </div>
-              <h3 class="card-title"><a href="blog-single.html">See more ideas about Travel</a></h3>
-              <p class="card-description">
-                Proin eget tortor risus. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis
-                a pellentesque nec,
-                egestas non nisi.
-              </p>
-            </div>
-            <div class="card-footer">
-              <div class="post-author">
-                <a href="#">
-                  <img src="img/DSC_0625.jpg" alt="" class="avatar rounded-circle">
-                  <span class="author">Houssam Himr</span>
-                </a>
-              </div>
-              <div class="post-date">
-                <span class="ion-ios-clock-outline"></span> 10 min
-              </div>
-            </div>
-          </div>
-        </div>
+<!-- FREELANCE -->
+<section class="section" id="freelance" style="padding-left:0;padding-right:0">
+  <div style="padding:0 56px 48px"><div class="eyebrow">Freelance</div><h2 class="sec-title">Independent <em>Mandates</em></h2></div>
+  <div class="fl-grid">
+    <div class="fl-card">
+      <div class="fl-platform">Freelance · Morocco · Direct</div>
+      <div class="fl-name">Animalkom</div>
+      <div class="fl-sub">Multi-Store BI · E-Commerce Analytics</div>
+      <p class="fl-desc">Complete BI solution for managing <strong>4 physical stores + e-commerce</strong> from one dashboard — revenue, costs & net profit per store, client tracking (new vs. returning), product performance (views, sales, stock alerts), visitor traffic, article traction, and full e-commerce funnel. Replaced scattered spreadsheets with a <strong>single source of truth</strong>.</p>
+      <div class="fl-tags"><span class="p-tag hi">Looker Studio</span><span class="p-tag hi">Revenue & P&L</span><span class="p-tag">4 Stores</span><span class="p-tag">E-Commerce</span><span class="p-tag">Product Analytics</span><span class="p-tag">Stock Alerts</span></div>
+    </div>
+    <div class="fl-card">
+      <div class="fl-platform">Freelance · Morocco · Direct</div>
+      <div class="fl-name">Salescopy</div>
+      <div class="fl-sub">Marketing Analytics · Team Performance · Revenue Intelligence</div>
+      <p class="fl-desc">Dual-layer reporting: <strong>customer analytics</strong> (campaign ROI, funnel conversions, acquisition cost, audience behavior) + <strong>internal team KPIs</strong> (individual/collective performance, task completion, SLA). Full P&L view — campaign costs vs. revenue vs. net margin per client and per campaign.</p>
+      <div class="fl-tags"><span class="p-tag hi">Looker Studio</span><span class="p-tag hi">GA4</span><span class="p-tag hi">Cost vs. Revenue</span><span class="p-tag">Campaign ROI</span><span class="p-tag">Team KPIs</span><span class="p-tag">Funnel Analytics</span></div>
+    </div>
+    <div class="fl-card" style="background:var(--bg)">
+      <div class="fl-platform">Upwork · Global · Remote</div>
+      <div class="fl-name">Upwork Freelancer</div>
+      <div class="fl-sub">BI Consulting · Dashboard Design · Data Modeling</div>
+      <p class="fl-desc">International BI consulting for logistics, retail, and SaaS clients — Looker Studio architecture, dbt modeling, SQL optimization, and full pipeline design from spec to delivery.</p>
+      <div class="fl-tags"><span class="p-tag hi">Looker Studio</span><span class="p-tag hi">dbt</span><span class="p-tag">Global Clients</span><span class="p-tag">Remote</span></div>
+    </div>
+    <div class="fl-card" style="background:var(--bg);border:1px dashed var(--border2);display:flex;align-items:center;justify-content:center;text-align:center">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:52px;font-style:italic;color:var(--blue3);margin-bottom:12px">+</div>
+        <div style="font-size:14px;color:var(--text2);margin-bottom:6px">Open to new mandates</div>
+        <div style="font-family:'Geist Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.1em">Remote · Contract · Full-time</div>
+        <a href="mailto:himrhoussam@gmail.com" style="display:inline-block;margin-top:18px;font-family:'Geist Mono',monospace;font-size:9px;color:var(--blue2);border:1px solid var(--border2);padding:10px 20px;letter-spacing:.1em;text-decoration:none;text-transform:uppercase">Get in touch ↗</a>
       </div>
     </div>
-  </section>
-  -->
-  <!--/ Section Blog End /-->
+  </div>
+</section>
 
-  <!--/ Section Contact-Footer Star /-->
-  <section class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(img/overlay-bg.jpg)">
-    <div class="overlay-mf"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="contact-mf">
-            <div id="contact" class="box-shadow-full">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="title-box-2">
-                    <h5 class="title-left">
-                      Send Message
-                    </h5>
-                  </div>
-                  <div>
-                      <form action="mailto:himrhoussam@gmail.com" method="post" role="form" class="contactForm">
-                      <div id="sendmessage">Your message has been sent. Thank you!</div>
-                      <div id="errormessage"></div>
-                      <div class="row">
-                        <div class="col-md-12 mb-3">
-                          <div class="form-group">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                            <div class="validation"></div>
-                          </div>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                          <div class="form-group">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                            <div class="validation"></div>
-                          </div>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                              <div class="validation"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                          <div class="form-group">
-                            <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                            <div class="validation"></div>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <button type="submit" class="button button-a btn-lg button-rouded">Send Message</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="title-box-2 pt-4 pt-md-0">
-                    <h5 class="title-left">
-                      Get in Touch
-                    </h5>
-                  </div>
-                  <div class="more-info">
-                    <p class="lead">
-                      Thank you for visiting my website. If you have any questions or would like to use my services, please don't hesitate to get in touch. I'm always here to help and provide the best possible solutions to my clients. To learn more about my services or follow my work, please feel free to connect with me on LinkedIn. Alternatively, you can also send me an email at himrhoussam@gmail.com and I'll be happy to provide you with more information. Looking forward to hearing from you soon!
-                    </p>
-                    <ul class="list-ico">
-                      <li><span class="ion-ios-location"></span> Casablanca, Morocco</li>
-                      <li><span class="ion-ios-telephone"></span> (+212) 682-140413</li>
-                      <li><span class="ion-email"></span> himrhoussam@gmail.com</li>
-                    </ul>
-                  </div>
-                  <div class="socials">
-                    <ul>
-                      <li><a href="https://www.linkedin.com/in/houssam-himr-780733176/" target="_blank"><span class="ico-circle"><i class="ion-social-linkedin"></i></span></a></li>
-                      <li><a href="https://www.instagram.com/hou_ssam_himr/"><span class="ico-circle"><i class="ion-social-instagram"></i></span></a></li>
-                      <!--<li><a href=""><span class="ico-circle"><i class="ion-social-twitter"></i></span></a></li>
-                      <li><a href=""><span class="ico-circle"><i class="ion-social-github"></i></span></a></li>
-                      -->
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+  <div class="eyebrow">Experience</div>
+  <h2 class="sec-title">5 Years of <em>Impact</em></h2>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div>
+        <div class="exp-period">Jul 2023<br>— Present</div>
+        <div class="exp-now-pill"><div class="exp-now-d"></div>Current Role</div>
+      </div>
+      <div>
+        <div class="exp-title">Senior Analytics Engineer · BI Lead</div>
+        <div class="exp-co">FRETERIUM<div class="exp-sep"></div>Casablanca, MA<div class="exp-sep"></div>Logistics SaaS</div>
+        <ul class="exp-bul">
+          <li>Architected full Looker Studio ecosystems for <strong>16+ enterprise accounts</strong> across Morocco, Tunisia, KSA, UAE & Indonesia — transport, retail, FMCG, mining & industrial</li>
+          <li>Built <strong>dbt data models + materialized views</strong> on BigQuery — ~60% load time reduction, real-time supply chain visibility</li>
+          <li>Primary QA gatekeeper for weekly production releases via TestCafe — <strong>zero critical data incidents</strong> over 2 years</li>
+          <li>Delivered on-site training for <strong>5+ enterprise partners</strong>, achieving 100% platform adoption across all rollouts</li>
+          <li>Built ClickUp-to-BigQuery dbt pipeline to <strong>track Tech, CS & Sales KPIs</strong> in real time for leadership</li>
+        </ul>
+        <div class="exp-tags"><span class="exp-tag core">dbt Core</span><span class="exp-tag core">BigQuery</span><span class="exp-tag core">Looker Studio</span><span class="exp-tag">MySQL</span><span class="exp-tag">TestCafe</span><span class="exp-tag">Agile</span><span class="exp-tag">ClickUp API</span></div>
       </div>
     </div>
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="copyright-box">
-              <p class="copyright">&copy; Copyright <strong>DevFolio</strong>. All Rights Reserved</p>
-              <div class="credits">
-                <!--
-                  All the links in the footer should remain intact.
-                  You can delete the links only if you purchased the pro version.
-                  Licensing information: https://bootstrapmade.com/license/
-                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=DevFolio
-                -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="exp-item">
+      <div><div class="exp-period">Jan 2022<br>— Jun 2023</div></div>
+      <div>
+        <div class="exp-title">Data Analyst</div>
+        <div class="exp-co">FRETERIUM<div class="exp-sep"></div>Foundational Phase</div>
+        <ul class="exp-bul">
+          <li>Built Freterium's <strong>first KPI framework from scratch</strong> — MRR, churn, CAC, engagement — used in Series A fundraising</li>
+          <li>Managed strategic analytics for <strong>Jumia and Carrefour</strong>, improving TMS adoption through data-driven insights</li>
+          <li>Designed ClickUp dashboards tracking team velocity, sprint completion & bottlenecks</li>
+        </ul>
+        <div class="exp-tags"><span class="exp-tag core">SQL</span><span class="exp-tag core">Metabase</span><span class="exp-tag">ClickUp</span><span class="exp-tag">Excel</span><span class="exp-tag">KPI Design</span><span class="exp-tag">Investor Reporting</span></div>
       </div>
-    </footer>
-  </section>
-  <!--/ Section Contact-footer End /-->
+    </div>
+  </div>
+</section>
 
-  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-  <div id="preloader"></div>
+<!-- EDUCATION -->
+<section class="section" id="education" style="padding-bottom:0">
+  <div class="eyebrow">Education & Certifications</div>
+  <h2 class="sec-title">Academic &amp; <em>Professional</em></h2>
+  <div class="edu-grid">
+    <div class="edu-card edu-featured"><div class="edu-inst">ENSA · Engineering School · Morocco</div><div class="edu-deg">M.Eng — AI, Digitalization & Data Science</div><div class="edu-detail" style="color:var(--text3);margin-top:8px">National School of Applied Sciences</div></div>
+    <div class="edu-card"><div class="edu-inst">ALX · 2024</div><div class="edu-deg">Data Science Professional Certificate</div><div class="edu-detail">Python · ML · Complex Modeling</div></div>
+    <div class="edu-card"><div class="edu-inst">IBM · 2023</div><div class="edu-deg">Data Analyst Professional Certificate</div><div class="edu-detail">SQL · Python · Data Visualization</div></div>
+    <div class="edu-card"><div class="edu-inst">Google · 2022</div><div class="edu-deg">Data Studio Specialization</div><div class="edu-detail">Advanced Dashboard Creation</div></div>
+    <div class="edu-card"><div class="edu-inst">Google · 2022</div><div class="edu-deg">Digital Marketing Certification</div><div class="edu-detail">Marketing Analytics · Growth</div></div>
+    <div class="edu-next edu-card"><div><div style="font-family:'Geist Mono',monospace;font-size:8px;color:var(--blue2);letter-spacing:.2em;margin-bottom:8px">NEXT · 2025</div><div style="font-family:'Playfair Display',serif;font-style:italic;font-size:20px;color:var(--blue2)">dbt Certification</div><div style="font-size:12px;color:var(--text2);margin-top:6px">In progress</div></div></div>
+  </div>
+</section>
 
-  <!-- JavaScript Libraries -->
-  <script src="lib/jquery/jquery.min.js"></script>
-  <script src="lib/jquery/jquery-migrate.min.js"></script>
-  <script src="lib/popper/popper.min.js"></script>
-  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-  <script src="lib/easing/easing.min.js"></script>
-  <script src="lib/counterup/jquery.waypoints.min.js"></script>
-  <script src="lib/counterup/jquery.counterup.js"></script>
-  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-  <script src="lib/lightbox/js/lightbox.min.js"></script>
-  <script src="lib/typed/typed.min.js"></script>
-  <!-- Contact Form JavaScript File -->
-  <script src="contactform/contactform.js"></script>
+<!-- CONTACT -->
+<section class="section" id="contact" style="padding:0;border-bottom:none">
+  <div class="contact-wrap">
+    <div class="contact-l">
+      <div>
+        <div class="eyebrow" style="margin-bottom:20px">Contact</div>
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(38px,4vw,58px);font-weight:400;line-height:1;margin-bottom:28px">Let's build<br><em style="color:var(--blue2)">something.</em></h2>
+        <p class="c-intro">Looking for an Analytics Engineer or BI Lead who owns the full data stack? Available for <strong style="color:var(--text)">remote full-time, contract, and freelance</strong> globally.</p>
+        <div class="c-avail"><div class="avail-dot"></div><span class="c-avail-text">Available · Remote Worldwide</span></div>
+      </div>
+      <div class="langs">
+        <div class="lang"><div class="lang-name">العربية</div><div class="lang-lvl">Native</div></div>
+        <div class="lang"><div class="lang-name">Français</div><div class="lang-lvl">Professional</div></div>
+        <div class="lang"><div class="lang-name">English</div><div class="lang-lvl">Professional</div></div>
+      </div>
+    </div>
+    <div class="contact-r">
+      <div class="c-links">
+        <a href="mailto:himrhoussam@gmail.com" class="c-link"><div class="c-link-info"><div class="c-label">Email</div><div class="c-val">himrhoussam@gmail.com</div></div><span class="c-arr">↗</span></a>
+        <a href="https://linkedin.com/in/himrhoussam" target="_blank" class="c-link"><div class="c-link-info"><div class="c-label">LinkedIn</div><div class="c-val">linkedin.com/in/himrhoussam</div></div><span class="c-arr">↗</span></a>
+        <a href="https://github.com/himrhoussam" target="_blank" class="c-link"><div class="c-link-info"><div class="c-label">GitHub</div><div class="c-val">github.com/himrhoussam</div></div><span class="c-arr">↗</span></a>
+        <a href="https://www.upwork.com" target="_blank" class="c-link"><div class="c-link-info"><div class="c-label">Upwork</div><div class="c-val">Freelance Profile ↗</div></div><span class="c-arr">↗</span></a>
+        <a href="tel:+212682140413" class="c-link"><div class="c-link-info"><div class="c-label">Phone · WhatsApp</div><div class="c-val">+212 682 140 413</div></div><span class="c-arr">↗</span></a>
+        <a href="https://Houssam-Himr.com" target="_blank" class="c-link"><div class="c-link-info"><div class="c-label">Website</div><div class="c-val">Houssam-Himr.com</div></div><span class="c-arr">↗</span></a>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- Template Main Javascript File -->
-  <script src="js/main.js"></script>
+<footer>
+  <span class="f-name">Houssam Himr — Analytics Engineer & BI Lead</span>
+  <span class="f-copy">Casablanca · Morocco · Remote Worldwide · 2025</span>
+</footer>
 
+<script>
+const dot = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
+function animRing(){rx+=(mx-rx)*.15;ry+=(my-ry)*.15;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)}
+animRing();
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
+</script>
 </body>
 </html>
